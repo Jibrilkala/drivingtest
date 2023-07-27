@@ -17,7 +17,7 @@ const QuizQuestion = ({ activeQuestion, question, selectedAnswerIndex, onAnswerS
       {answerOptions.map((answer, idx) => (
         <div key={idx} className='my-2'>
           <div onClick={() => onAnswerSelected(idx)}
-            className={`cursor-pointer py-4 px-2 block border border-gray-300 ${selectedAnswerIndex === idx ? 'bg-green-500 text-white' : 'hover:bg-gray-200'}`}>
+            className={`cursor-pointer py-4 px-2 block border border-gray-300 ${selectedAnswerIndex === idx ? 'bg-green-500 text-yellow-200' : 'hover:bg-gray-200'}`}>
             <span style={{ fontSize: '20px' }}>{answer}</span>
           </div>
         </div>

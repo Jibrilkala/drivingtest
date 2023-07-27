@@ -1,39 +1,27 @@
-"use client";
+"use client"
 
-import React, { useState, useEffect } from "react";
-import quizData from "../data.json";
-import QuizResult from "../../components/Result.js"; // import the QuizResult component
-import QuizQuestion from "../../components/Question";
-import ControlButtons from "../../components/ControlButtons";
-
+import React, { useState } from 'react';
+import quizData from '../data.json';
+import QuizResult from '../../components/Result';
+import QuizQuestion from '../../components/Question';
+import ControlButtons from '../../components/ControlButtons';
+import QuizReview from '../../components/Review';
 
 const Page = () => {
   const [activeQuestion, setActiveQuestion] = useState(0);
-  const [selectedAnswers, setSelectedAnswers] = useState([]);
+  const [selectedAnswerIndices, setSelectedAnswerIndices] = useState(Array(quizData[0].quizData.length).fill(null));
   const [showResult, setShowResult] = useState(false);
-  const [showCorrect, setShowCorrect] = useState(false);
-  const [userAnswers, setUserAnswers] = useState([]);
-  const [selectedAnswerIndex, setSelectedAnswerIndex] = useState(null);
-  const [review, setReview] = useState(false);
-
+  const [reviewing, setReviewing] = useState(false);
+  
   const questions = quizData[0].quizData;
-  const { answerOptions, correctAnswer } = questions[activeQuestion];
-
-  useEffect(() => {
-    if (!selectedAnswers.some((ans) => ans.questionIndex === activeQuestion)) {
-      setSelectedAnswers([...selectedAnswers, { questionIndex: activeQuestion, selectedAnswer: null }]);
-      setUserAnswers([...userAnswers, null]);
-    }
-  }, [activeQuestion]);
 
   const onAnswerSelected = (idx) => {
-    setSelectedAnswers(selectedAnswers.map((item) => (item.questionIndex === activeQuestion ? { ...item, selectedAnswer: answerOptions[idx] === correctAnswer } : item)));
-    setSelectedAnswerIndex(idx);
-    setUserAnswers(userAnswers.map((item, index) => (index === activeQuestion ? answerOptions[idx] : item)));
+    let newSelectedAnswers = [...selectedAnswerIndices];
+    newSelectedAnswers[activeQuestion] = idx;
+    setSelectedAnswerIndices(newSelectedAnswers);
   };
 
   const nextQuestion = () => {
-    setSelectedAnswerIndex(null);
     if (activeQuestion !== questions.length - 1) {
       setActiveQuestion((prev) => prev + 1);
     } else {
@@ -42,7 +30,6 @@ const Page = () => {
   };
 
   const prevQuestion = () => {
-    setSelectedAnswerIndex(null);
     if (activeQuestion !== 0) {
       setActiveQuestion((prev) => prev - 1);
     }
@@ -51,21 +38,18 @@ const Page = () => {
   const onQuestionClick = (idx) => {
     setActiveQuestion(idx);
     setShowResult(false);
-    setReview(true);
+    setReviewing(true);
   };
 
-  const showCorrectAnswers = () => {
-    setShowCorrect(true);
-  };
-
-  const showWrongAnswers = () => {
-    setShowCorrect(false);
-  };
+  const returnToResult = () => {
+    setReviewing(false);
+  }
 
   const result = {
-    score: selectedAnswers.reduce((total, current) => (current.selectedAnswer ? total + 1 : total), 0),
-    correctAnswers: selectedAnswers.filter((answer) => answer.selectedAnswer).length,
-    wrongAnswers: selectedAnswers.filter((answer) => answer.selectedAnswer === false).length,
+    score: selectedAnswerIndices.reduce((total, current, idx) => (current === questions[idx].answerOptions.indexOf(questions[idx].correctAnswer) ? total + 1 : total), 0),
+    correctAnswers: selectedAnswerIndices.filter((answerIndex, idx) => answerIndex === questions[idx].answerOptions.indexOf(questions[idx].correctAnswer)).length,
+    wrongAnswers: selectedAnswerIndices.filter((answerIndex, idx) => answerIndex !== null && answerIndex !== questions[idx].answerOptions.indexOf(questions[idx].correctAnswer)).length,
+    unanswered: selectedAnswerIndices.filter((answerIndex) => answerIndex === null).length,
   };
 
   return (
@@ -73,12 +57,12 @@ const Page = () => {
       <h1 className='text-black text-2xl'>Quiz Page</h1>
       {!showResult ? (
         <>
-          <QuizQuestion activeQuestion={activeQuestion} question={questions[activeQuestion]} selectedAnswerIndex={selectedAnswerIndex} onAnswerSelected={onAnswerSelected} totalQuestions={questions.length} />
-          {!review && <ControlButtons activeQuestion={activeQuestion} nextQuestion={nextQuestion} prevQuestion={prevQuestion} totalQuestions={questions.length} />}
-          {review && <button onClick={() => setShowResult(true)}>Back to Result</button>}
+          <QuizQuestion activeQuestion={activeQuestion} question={questions[activeQuestion]} selectedAnswerIndex={selectedAnswerIndices[activeQuestion]} onAnswerSelected={onAnswerSelected} totalQuestions={questions.length} />
+          {!reviewing && <ControlButtons activeQuestion={activeQuestion} selectedAnswerIndices={selectedAnswerIndices} nextQuestion={nextQuestion} prevQuestion={prevQuestion} totalQuestions={questions.length} />}
+          {reviewing && <button onClick={returnToResult} className='py-2 px-4 mt-3 bg-gray-500 text-white rounded cursor-pointer'>Return to Result</button>}
         </>
       ) : (
-        <QuizResult result={result} passMark={80} questions={questions} answerResults={selectedAnswers.map((item) => item.selectedAnswer)} userAnswers={userAnswers} onQuestionClick={onQuestionClick} showCorrectAnswers={showCorrectAnswers} showWrongAnswers={showWrongAnswers} showCorrect={showCorrect} />
+        <QuizResult result={result} passMark={80} questions={questions} selectedAnswerIndices={selectedAnswerIndices} onQuestionClick={onQuestionClick} />
       )}
     </div>
   );

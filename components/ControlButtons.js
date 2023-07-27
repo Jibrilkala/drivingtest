@@ -1,6 +1,7 @@
 import React from 'react';
 
 const ControlButtons = ({ activeQuestion, nextQuestion, prevQuestion, totalQuestions }) => {
+
   return (
     <div className='my-4 flex justify-between'>
       {activeQuestion > 0 && (
