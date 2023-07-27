@@ -1,0 +1,62 @@
+[
+  {
+    "quizCategory": "alertness",
+    "quizData": [
+      {
+        "questionText": "On a long motorway journey boredom can cause you to feel sleepy. You should",
+        "answerOptions": [
+          "play some loud music",
+          "stop on the hard shoulder for a rest",
+          "drive faster to complete your journey sooner",
+          "ensure a supply of fresh air into your vehicle"
+        ],
+        "correctAnswer": "ensure a supply of fresh air into your vehicle",
+        "hint": "Plan your journey to include suitable rest stops. You should take all possible precautions against feeling sleepy while driving. Any lapse of concentration could have serious consequences."
+      },
+      {
+        "questionText": "You are waiting to emerge from a junction. The windscreen pillar is restricting your view. What should you be particularly aware of?",
+        "answerOptions": [
+          "Lorries",
+          "Buses",
+          "Motorcyclists",
+          "Coaches"
+        ],
+        "correctAnswer": "Motorcyclists",
+        "hint": "Windscreen pillars can completely block your view of pedestrians, motorcyclists and pedal cyclists. You should particularly watch out for these road users; don’t just rely on a quick glance. Where possible make eye contact with them so you can be sure they have seen you too."
+      },
+      {
+        "questionText": "What does the term ‘blind spot’ mean for a driver?",
+        "answerOptions": [
+          "An area covered by your right-hand mirror",
+          "An area not covered by your headlights",
+          "An area covered by your left-hand mirror",
+          "An area not covered by your mirrors"
+        ],
+        "correctAnswer": "An area not covered by your mirrors",
+        "hint": "Modern vehicles provide the driver with well-positioned mirrors which are essential to safe driving. However, they cannot see every angle of the scene behind and to the sides of the vehicle. This is why it is essential that you check over your shoulder, so that you are aware of any hazards not reflected in your mirrors."
+      },
+      {
+        "questionText": "Which of the following should you do before stopping?",
+        "answerOptions": [
+          "Sound the horn",
+          "Use the mirrors",
+          "Select a higher gear",
+          "Flash your headlights"
+        ],
+        "correctAnswer": "Use the mirrors",
+        "hint": "Before pulling up check the mirrors to see what is happening behind you. Also assess what is ahead and make sure you give the correct signal if it helps other road users."
+      },
+      {
+        "questionText": "When following a large vehicle you should keep well back because this",
+        "answerOptions": [
+          "allows you to corner more quickly",
+          "helps the large vehicle to stop more easily",
+          "allows the driver to see you in the mirrors",
+          "helps you to keep out of the wind"
+        ],
+        "correctAnswer": "allows the driver to see you in the mirrors",
+        "hint": "If you’re following a large vehicle but are so close to it that you can’t see the exterior mirrors, the driver can’t see you. Keeping well back will also allow you to see the road ahead by looking past either side of the large vehicle."
+      }
+    ]
+  }
+]
